@@ -1,0 +1,117 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+* {
+  font-family: 'Poppins', Arial, Helvetica, sans-serif;
+}
+
+#app {
+  background: radial-gradient(#504989,#201639);
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+#app h1 {
+  color: white;
+  margin: 0;
+  padding: 0;
+  font-size: 22px;
+  font-weight: 600;
+  text-align: center;
+  margin: 0 auto;
+  line-height: 1.5;
+  width: 75%;
+}
+
+main {
+  width: 50%;
+  height: 60%;
+}
+
+.card {
+  background: white;
+  width: 100%;
+  height: 80%;
+  border-radius: 30px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 25px;
+  justify-content: center;
+}
+
+form {
+  width: 90%;
+  display: flex;
+  flex-direction: column;
+  padding: 20px 0;
+  row-gap: 30px;
+}
+
+.form-control {
+  display: flex;
+  flex-direction: column;
+  row-gap: 10px;
+}
+
+label {
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+select {
+  border: none;
+  background: #EDEDED;
+  width: 100%;
+  height: 52px;
+  border-radius: 10px;
+  padding: 0 10px;
+}
+
+button {
+  background: #6D4DC7 !important;
+  color: white;
+}
+
+.house-card {
+  background: white;
+  border-radius: 30px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 350px;
+  width: 300px;
+  transition: all 0.5s ease-in-out;
+}
+
+.house-card h1 {
+  color: black !important;
+}
+
+.type-container {
+  width: 75%;
+}
+
+.type-container h1 {
+  font-weight: 400;
+  margin-bottom: 30px !important;
+}
+
+.type-container button {
+  width: 50%;
+  margin: 0 25%;
+  margin-top: 5%;
+}
+
+.house-card-selected {
+  border: 4px solid #6D4DC7;
+}
+
+.disabled {
+  background: lightgray !important;
+  outline: none;
+}
