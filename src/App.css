@@ -1,17 +1,21 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
 
+:root {
+  --primary-color : #504989
+}
+
 * {
   font-family: 'Poppins', Arial, Helvetica, sans-serif;
 }
 
 #app {
-  background: radial-gradient(#504989,#201639);
+  background: radial-gradient(var(--primary-color),#201639);
   width: 100vw;
   height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
+  justify-content: start;
 }
 
 #app h1 {
@@ -29,6 +33,7 @@
 main {
   width: 50%;
   height: 60%;
+  margin-top: 12%;
 }
 
 .card {
@@ -94,7 +99,41 @@ button {
 }
 
 .type-container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.content {
   width: 70%;
+}
+
+.back-button {
+  display: flex;
+  align-items: center;
+  column-gap: 15px;
+  cursor: pointer;
+}
+
+.type-container nav {
+  width: 90%;
+  margin-top: 40px;
+  margin-bottom: 50px;
+}
+
+.type-container nav p {
+  color: white;
+  font-size: 1rem;
+}
+
+.type-container ion-icon {
+  color: var(--primary-color);
+  width: 25px;
+  height: 25px;
+  background: white;
+  padding: 6px;
+  border-radius: 5px;
 }
 
 .type-container h1 {
@@ -109,7 +148,7 @@ button {
 }
 
 .house-card-selected {
-  background: linear-gradient(to bottom,#504989,#201639); 
+  background: linear-gradient(to bottom,var(--primary-color),#201639); 
 }
 
 .house-card-selected h1 {

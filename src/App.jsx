@@ -33,12 +33,12 @@ function App() {
       {currentPage === 'main' && 
         <Main>
           <h1>Use our tool to predict the price of any house of your interest</h1>
-          <Card onChangeTown={handleChangeTown} onChangeCountry={handleChangeCountry} onChangePage={(page) => setCurrentPage(page)}/>
+          <Card currentCountry={country} currentTown={town} onChangeTown={handleChangeTown} onChangeCountry={handleChangeCountry} onChangePage={(page) => setCurrentPage(page)}/>
         </Main>
       }
-      
+
       {currentPage === 'type' && 
-      <Type selectedHouse={typeOfHouse} onChangeType={handleChangeType} typeOfHouse={typeOfHouse}/>
+      <Type onChangePage={(page)=> setCurrentPage(page)} selectedHouse={typeOfHouse} onChangeType={handleChangeType} typeOfHouse={typeOfHouse}/>
       } 
     </div>
   )
@@ -52,7 +52,7 @@ const Main = ({children}) => {
   )
 };
 
-const Card = ({onChangePage, onChangeCountry, onChangeTown}) => {
+const Card = ({onChangePage, onChangeCountry, onChangeTown, currentCountry, currentTown}) => {
   return (
     <div className="card">
       <form>
@@ -75,8 +75,14 @@ const Card = ({onChangePage, onChangeCountry, onChangeTown}) => {
           </select>
         </div>
         <button
-          onClick={()=>{
-            onChangePage('type');
+          onClick={(event)=>{
+            if (currentCountry && currentTown){
+              event.preventDefault();
+              onChangePage('type');
+            } else {
+              event.preventDefault();
+              alert("Make sure all the forms are filled")
+            }
           }}
         >Continue</button>
       </form>
@@ -84,7 +90,7 @@ const Card = ({onChangePage, onChangeCountry, onChangeTown}) => {
   )
 }
 
-const Type = ({typeOfHouse, onChangeType, selectedHouse}) => {
+const Type = ({typeOfHouse, onChangeType, selectedHouse, onChangePage}) => {
   const types = [
   "Single Family",
   "Condo",
@@ -94,14 +100,28 @@ const Type = ({typeOfHouse, onChangeType, selectedHouse}) => {
   ]
   return (
     <div className="type-container">
-      <h1>Select the type of the house</h1>
-      <Carousel>
-        {
-          types.map(type => <SwiperSlide><HouseTypeCard selectedHouse={selectedHouse} onChangeType={onChangeType} content={type} /></SwiperSlide>)
-        }
-      </Carousel>
-      {typeOfHouse ? <button>Predict</button> : <button className="disabled" disabled>Predict</button>}
+      <nav>
+        <BackButton onChangePage={onChangePage}/>
+      </nav>
+      <div className="content">   
+        <h1>Select the type of the house</h1>
+        <Carousel>
+          {
+            types.map(type => <SwiperSlide><HouseTypeCard selectedHouse={selectedHouse} onChangeType={onChangeType} content={type} /></SwiperSlide>)
+          }
+        </Carousel>
+        {typeOfHouse ? <button>Predict</button> : <button className="disabled" disabled>Predict</button>}
+      </div>
     </div>
+  )
+}
+
+const BackButton = ({onChangePage}) => {
+  return (
+  <div className="back-button" onClick={()=> onChangePage('main')}>
+    <ion-icon name="chevron-back-outline"></ion-icon>
+    <p>Back</p>
+  </div>
   )
 }
 
