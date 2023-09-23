@@ -101,7 +101,7 @@ const Type = ({typeOfHouse, onChangeType, selectedHouse, onChangePage}) => {
   return (
     <div className="type-container">
       <nav>
-        <BackButton onChangePage={onChangePage}/>
+        <BackButton onChangeType={onChangeType} onChangePage={onChangePage}/>
       </nav>
       <div className="content">   
         <h1>Select the type of the house</h1>
@@ -116,9 +116,15 @@ const Type = ({typeOfHouse, onChangeType, selectedHouse, onChangePage}) => {
   )
 }
 
-const BackButton = ({onChangePage}) => {
+const BackButton = ({onChangePage, onChangeType}) => {
   return (
-  <div className="back-button" onClick={()=> onChangePage('main')}>
+  <div className="back-button" onClick={
+    ()=> {
+      onChangePage('main');
+      // Set type to null for not selected
+      onChangeType(null);
+      }
+    }>
     <ion-icon name="chevron-back-outline"></ion-icon>
     <p>Back</p>
   </div>
@@ -149,9 +155,14 @@ const Carousel = ({children}) => {
 }
 
 const HouseTypeCard = ({content, onChangeType, selectedHouse}) => {
+  const imgDict = {
+    "Single Family" : "src/assets/icon-single-family.png",
+    "Condo" : "src/assets/icon-condominium.png"
+  };
   const isSelected = content === selectedHouse
   return (
     <div onClick={()=>onChangeType(content)} className={`house-card ${isSelected ? 'house-card-selected' : null}`}>
+      <img className={`${isSelected ? 'floating' : null}`} src={imgDict[content]}/>
       <h1>{content}</h1>
     </div>
   )

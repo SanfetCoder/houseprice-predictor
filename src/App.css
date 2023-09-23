@@ -92,10 +92,17 @@ button {
   height: 350px;
   width: 300px;
   transition: all 0.5s ease-in-out;
+  row-gap: 20px;
 }
 
 .house-card h1 {
   color: black !important;
+}
+
+.house-card img{
+  width: 80%;
+  height: 55%;
+  object-fit: cover;
 }
 
 .type-container {
@@ -114,6 +121,11 @@ button {
   align-items: center;
   column-gap: 15px;
   cursor: pointer;
+  width: max-content;
+}
+
+.back-button p{
+  font-weight: 600;
 }
 
 .type-container nav {
@@ -131,6 +143,7 @@ button {
   color: var(--primary-color);
   width: 25px;
   height: 25px;
+  text-align: center;
   background: white;
   padding: 6px;
   border-radius: 5px;
@@ -158,4 +171,18 @@ button {
 .disabled {
   background: lightgray !important;
   outline: none;
+}
+
+/* Animation */
+.floating {
+  animation: float 3s ease-in-out infinite;
+}
+
+@keyframes float {
+  0%, 100% {
+      transform:  translateY(0); /* Start and end at the same position */
+  }
+  50% {
+      transform: translateY(-20px); /* Move up in the middle of the animation */
+  }
 }
