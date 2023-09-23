@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import './App.css'
-import { Navigation, Pagination, Scrollbar, A11y, EffectCoverflow } from 'swiper/modules';
+import { Navigation, Pagination, EffectCoverflow } from 'swiper/modules';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import towns from '../town';
 
@@ -30,54 +30,86 @@ function App() {
 
   return (
     <div id="app"> 
-      {currentPage === 'main' && <Main onChangeTown={handleChangeTown} onChangeCountry={handleChangeCountry} onChangePage={(page) => setCurrentPage(page)}/>}
-      {currentPage === 'type' && <Type selectedHouse={typeOfHouse} onChangeType={handleChangeType} typeOfHouse={typeOfHouse}/>} 
+      {currentPage === 'main' && 
+        <Main>
+          <h1>Use our tool to predict the price of any house of your interest</h1>
+          <Card onChangeTown={handleChangeTown} onChangeCountry={handleChangeCountry} onChangePage={(page) => setCurrentPage(page)}/>
+        </Main>
+      }
+      
+      {currentPage === 'type' && 
+      <Type selectedHouse={typeOfHouse} onChangeType={handleChangeType} typeOfHouse={typeOfHouse}/>
+      } 
     </div>
   )
 }
 
-const Main = ({onChangePage, onChangeCountry, onChangeTown}) => {
+const Main = ({children}) => {
   return (
     <main>
-      <h1>Use our tool to predict the price of any house of your interest</h1>
-      <div className="card">
-        <form>
-          <div className="form-control">
-            <label for="inputCountry">Which country do you live?</label>
-            <select onChange={(e)=>onChangeCountry(e.target.value)} name="inputCountry">
-              <option>Select a country</option>
-              <option value="USA">USA</option>
-            </select>
-          </div>
-          <div className="form-control">
-            <label for="inputTown">Select a town</label>
-            <select
-              onChange={(e)=>onChangeTown(e.target.value)}
-              name="inputTown">
-              <option>Select a town</option>
-              {
-                towns.map(town => <option value={town}>{town}</option>)
-              }
-            </select>
-          </div>
-          <button
-            onClick={()=>{
-              onChangePage('type');
-            }}
-          >Continue</button>
-        </form>
-      </div>
+      {children}
     </main>
   )
 };
 
+const Card = ({onChangePage, onChangeCountry, onChangeTown}) => {
+  return (
+    <div className="card">
+      <form>
+        <div className="form-control">
+          <label for="inputCountry">Which country do you live?</label>
+          <select onChange={(e)=>onChangeCountry(e.target.value)} name="inputCountry">
+            <option>Select a country</option>
+            <option value="USA">USA</option>
+          </select>
+        </div>
+        <div className="form-control">
+          <label for="inputTown">Select a town</label>
+          <select
+            onChange={(e)=>onChangeTown(e.target.value)}
+            name="inputTown">
+            <option>Select a town</option>
+            {
+              towns.map(town => <option value={town}>{town}</option>)
+            }
+          </select>
+        </div>
+        <button
+          onClick={()=>{
+            onChangePage('type');
+          }}
+        >Continue</button>
+      </form>
+    </div>
+  )
+}
+
 const Type = ({typeOfHouse, onChangeType, selectedHouse}) => {
+  const types = [
+  "Single Family",
+  "Condo",
+  "Two Family",
+  "Three Family",
+  "Four Family"
+  ]
   return (
     <div className="type-container">
       <h1>Select the type of the house</h1>
-      <Swiper
+      <Carousel>
+        {
+          types.map(type => <SwiperSlide><HouseTypeCard selectedHouse={selectedHouse} onChangeType={onChangeType} content={type} /></SwiperSlide>)
+        }
+      </Carousel>
+      {typeOfHouse ? <button>Predict</button> : <button className="disabled" disabled>Predict</button>}
+    </div>
+  )
+}
+
+const Carousel = ({children}) => {
+  return (
+    <Swiper
         // install Swiper modules
-        modules={[Navigation, Pagination, Scrollbar, A11y, EffectCoverflow]}
+        modules={[Navigation, Pagination, EffectCoverflow]}
         spaceBetween={50}
         slidesPerView={3}
         effect={'coverflow'}
@@ -90,18 +122,9 @@ const Type = ({typeOfHouse, onChangeType, selectedHouse}) => {
           modifier: 1,
           slideShadows: false,
         }}
-        // onSwiper={(swiper) => console.log(swiper)}
-        // onSlideChange={() => console.log('slide change')}
       >
-        <SwiperSlide><HouseTypeCard selectedHouse={selectedHouse} onChangeType={onChangeType} content="Single Family" /></SwiperSlide>
-        <SwiperSlide><HouseTypeCard selectedHouse={selectedHouse} onChangeType={onChangeType} content="Condo" /></SwiperSlide>
-        <SwiperSlide><HouseTypeCard selectedHouse={selectedHouse} onChangeType={onChangeType} content="Two Family" /></SwiperSlide>
-        <SwiperSlide><HouseTypeCard selectedHouse={selectedHouse} onChangeType={onChangeType} content="Three Family" /></SwiperSlide>
-        <SwiperSlide><HouseTypeCard selectedHouse={selectedHouse} onChangeType={onChangeType} content="Four Family" /></SwiperSlide>
+        {children}
       </Swiper>
-      {typeOfHouse && <button>Predict</button>}
-      {!typeOfHouse && <button className="disabled" disabled>Predict</button>}
-    </div>
   )
 }
 
