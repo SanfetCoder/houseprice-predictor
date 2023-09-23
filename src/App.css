@@ -108,7 +108,11 @@ button {
 }
 
 .house-card-selected {
-  border: 4px solid #6D4DC7;
+  background: linear-gradient(to bottom,#504989,#201639); 
+}
+
+.house-card-selected h1 {
+  color: white !important; 
 }
 
 .disabled {
