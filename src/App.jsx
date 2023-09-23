@@ -62,7 +62,7 @@ const Result = ({predictedPrice}) => {
     <div className="result-container">
       <div className="content">
         <h3>Estimated Price</h3>
-        {predictedPrice ? <h1>${predictedPrice}</h1> : <h1>Loading...</h1>}
+        {predictedPrice ? <h1>${predictedPrice.toLocaleString()}</h1> : <h1>Loading...</h1>}
         <button onClick={()=>window.location.reload()}>Try more</button>
       </div>
     </div>
