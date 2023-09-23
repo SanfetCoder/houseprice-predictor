@@ -3,6 +3,8 @@ import './App.css'
 import { Navigation, Pagination, EffectCoverflow } from 'swiper/modules';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import towns from '../town';
+import axios from "axios";
+import {v4} from "uuid";
 
 // Import Swiper styles
 import 'swiper/css';
@@ -15,6 +17,7 @@ function App() {
   const [country, setCountry] = useState(null);
   const [town, setTown] = useState(null);
   const [typeOfHouse, setTypeOfHouse] = useState(null);
+  const [estimatedPrice, setEstimatedPrice] = useState(null);
   
   function handleChangeCountry(country){
     setCountry(country);
@@ -28,6 +31,12 @@ function App() {
     setTypeOfHouse(type)
   }
 
+  async function handlePredictPrice(){
+    const endpoint = `http://127.0.0.1:8000/${town}/${typeOfHouse}`;
+    const response = await axios.get(endpoint);
+    setEstimatedPrice(response.data['predicted_price'])
+  }
+
   return (
     <div id="app"> 
       {currentPage === 'main' && 
@@ -38,8 +47,24 @@ function App() {
       }
 
       {currentPage === 'type' && 
-      <Type onChangePage={(page)=> setCurrentPage(page)} selectedHouse={typeOfHouse} onChangeType={handleChangeType} typeOfHouse={typeOfHouse}/>
-      } 
+      <Type onPredictPrice={handlePredictPrice} currentTown={town} currentType={typeOfHouse} onChangePage={(page)=> setCurrentPage(page)} selectedHouse={typeOfHouse} onChangeType={handleChangeType} typeOfHouse={typeOfHouse}/>
+      }
+
+      {currentPage === 'result' &&
+      <Result predictedPrice={estimatedPrice}/>
+      }
+    </div>
+  )
+}
+
+const Result = ({predictedPrice}) => {
+  return (
+    <div className="result-container">
+      <div className="content">
+        <h3>Estimated Price</h3>
+        {predictedPrice ? <h1>${predictedPrice}</h1> : <h1>Loading...</h1>}
+        <button onClick={()=>window.location.reload()}>Try more</button>
+      </div>
     </div>
   )
 }
@@ -57,20 +82,20 @@ const Card = ({onChangePage, onChangeCountry, onChangeTown, currentCountry, curr
     <div className="card">
       <form>
         <div className="form-control">
-          <label for="inputCountry">Which country do you live?</label>
+          <label htmlFor="inputCountry">Which country do you live?</label>
           <select onChange={(e)=>onChangeCountry(e.target.value)} name="inputCountry">
             <option>Select a country</option>
             <option value="USA">USA</option>
           </select>
         </div>
         <div className="form-control">
-          <label for="inputTown">Select a town</label>
+          <label htmlFor="inputTown">Select a town</label>
           <select
             onChange={(e)=>onChangeTown(e.target.value)}
             name="inputTown">
             <option>Select a town</option>
             {
-              towns.map(town => <option value={town}>{town}</option>)
+              towns.map(town => <option key={v4()} value={town}>{town}</option>)
             }
           </select>
         </div>
@@ -90,7 +115,8 @@ const Card = ({onChangePage, onChangeCountry, onChangeTown, currentCountry, curr
   )
 }
 
-const Type = ({typeOfHouse, onChangeType, selectedHouse, onChangePage}) => {
+const Type = ({typeOfHouse, onChangeType, selectedHouse, onChangePage, onPredictPrice}) => {
+
   const types = [
   "Single Family",
   "Condo",
@@ -98,6 +124,7 @@ const Type = ({typeOfHouse, onChangeType, selectedHouse, onChangePage}) => {
   "Three Family",
   "Four Family"
   ]
+
   return (
     <div className="type-container">
       <nav>
@@ -110,7 +137,15 @@ const Type = ({typeOfHouse, onChangeType, selectedHouse, onChangePage}) => {
             types.map(type => <SwiperSlide><HouseTypeCard selectedHouse={selectedHouse} onChangeType={onChangeType} content={type} /></SwiperSlide>)
           }
         </Carousel>
-        {typeOfHouse ? <button>Predict</button> : <button className="disabled" disabled>Predict</button>}
+        {typeOfHouse ? 
+        <button 
+          onClick={()=>{
+            onChangePage('result')
+            onPredictPrice();
+            }
+          }>Predict</button> : <button className="disabled" disabled
+        >Predict</button>
+        }
       </div>
     </div>
   )

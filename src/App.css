@@ -173,6 +173,37 @@ button {
   outline: none;
 }
 
+.result-container {
+  color: white;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.result-container .content{
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  align-items: center;
+}
+
+.result-container h1 {
+  font-size: 5rem !important;
+  font-weight: 400 !important;
+}
+
+.result-container h3{
+  font-weight: 500;
+}
+
+.result-container button {
+  width: 30%;
+  margin-top: 30px;
+}
+
 /* Animation */
 .floating {
   animation: float 3s ease-in-out infinite;
