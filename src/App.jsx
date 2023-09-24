@@ -191,11 +191,11 @@ const Carousel = ({children}) => {
 
 const HouseTypeCard = ({content, onChangeType, selectedHouse}) => {
   const imgDict = {
-    "Single Family" : "assets/icon-single-family.png",
-    "Condo" : "assets/icon-condominium.png",
-    "Two Family" : "assets/icon-two-family.png",
-    "Three Family" : "assets/icon-three-family.png",
-    "Four Family" : "assets/icon-four-family.png"
+    "Single Family" : "/assets/icon-single-family.png",
+    "Condo" : "/assets/icon-condominium.png",
+    "Two Family" : "/assets/icon-two-family.png",
+    "Three Family" : "/assets/icon-three-family.png",
+    "Four Family" : "/assets/icon-four-family.png"
   };
   const isSelected = content === selectedHouse
   return (
