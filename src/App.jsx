@@ -32,7 +32,7 @@ function App() {
   }
 
   async function handlePredictPrice(){
-    const endpoint = `http://127.0.0.1:8000/${town}/${typeOfHouse}`;
+    const endpoint = `https://housify-predictor.onrender.com/${town}/${typeOfHouse}`;
     const response = await axios.get(endpoint);
     setEstimatedPrice(response.data['predicted_price'])
   }
