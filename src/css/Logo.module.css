@@ -1,11 +1,14 @@
 .logo {
   font-size: 35px;
   font-weight: bold;
+  display:flex;
+  align-items: center;
   color: white;
   width: 145px;
+  height: 40px;
   white-space: nowrap; /* Prevent text from wrapping */
   overflow: hidden; /* Hide overflowing text */
-  border-right: 2px solid #333; /* Create a typing cursor effect */
+  border-right: 4.5px solid white; /* Create a typing cursor effect */
   animation: typing 1s steps(20, end), blink-caret 0.5s step-end infinite;
 }
 
