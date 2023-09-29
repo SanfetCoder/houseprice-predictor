@@ -1,0 +1,29 @@
+.logo {
+  font-size: 35px;
+  font-weight: bold;
+  color: white;
+  width: 145px;
+  white-space: nowrap; /* Prevent text from wrapping */
+  overflow: hidden; /* Hide overflowing text */
+  border-right: 2px solid #333; /* Create a typing cursor effect */
+  animation: typing 1s steps(20, end), blink-caret 0.5s step-end infinite;
+}
+
+@keyframes typing {
+  from {
+    width: 0;
+  }
+  to {
+    width: 145px;
+  }
+}
+
+@keyframes blink-caret {
+  from,
+  to {
+    border-color: transparent;
+  }
+  50% {
+    border-color: white;
+  }
+}

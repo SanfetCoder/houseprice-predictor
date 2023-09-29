@@ -12,6 +12,7 @@ import 'swiper/css/pagination';
 import 'swiper/css/scrollbar';
 import animationData from "./lottie/houseLoading.json"
 import Lottie from 'react-lottie';
+import Logo from './reusableComponents/Logo';
 
 function App() {
   const [currentPage, setCurrentPage] = useState('main');
@@ -45,7 +46,7 @@ function App() {
     <div id="app"> 
       {currentPage === 'main' && 
         <Main>
-          <h1>Use our tool to predict the price of any house of your interest</h1>
+          <Logo />
           <Card currentCountry={country} currentTown={town} onChangeTown={handleChangeTown} onChangeCountry={handleChangeCountry} onChangePage={(page) => setCurrentPage(page)}/>
         </Main>
       }
