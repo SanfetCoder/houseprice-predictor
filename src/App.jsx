@@ -5,12 +5,13 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import towns from '../town';
 import axios from "axios";
 import {v4} from "uuid";
-
 // Import Swiper styles
 import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 import 'swiper/css/scrollbar';
+import animationData from "./lottie/houseLoading.json"
+import Lottie from 'react-lottie';
 
 function App() {
   const [currentPage, setCurrentPage] = useState('main');
@@ -18,6 +19,7 @@ function App() {
   const [town, setTown] = useState(null);
   const [typeOfHouse, setTypeOfHouse] = useState(null);
   const [estimatedPrice, setEstimatedPrice] = useState(null);
+  const [isLoading, setIsLoading] = useState(false)
   
   function handleChangeCountry(country){
     setCountry(country);
@@ -32,9 +34,11 @@ function App() {
   }
 
   async function handlePredictPrice(){
+    setIsLoading(true);
     const endpoint = `https://housify-predictor.onrender.com/${town}/${typeOfHouse}`;
     const response = await axios.get(endpoint);
     setEstimatedPrice(response.data['predicted_price'])
+    setIsLoading(false);
   }
 
   return (
@@ -51,18 +55,31 @@ function App() {
       }
 
       {currentPage === 'result' &&
-      <Result predictedPrice={estimatedPrice}/>
+      <Result isLoading={isLoading} predictedPrice={estimatedPrice}/>
       }
     </div>
   )
 }
 
-const Result = ({predictedPrice}) => {
+const Result = ({predictedPrice, isLoading}) => {
+  const defaultOptions = {
+    loop: true,
+    autoplay: true,
+    animationData: animationData,
+    rendererSettings: {
+      preserveAspectRatio: "xMidYMid slice"
+    }
+  };
   return (
     <div className="result-container">
       <div className="content">
         <h3>Estimated Price</h3>
-        {predictedPrice ? <h1>${predictedPrice.toLocaleString()}</h1> : <h1>Loading...</h1>}
+        
+        {predictedPrice ? <h1>${predictedPrice.toLocaleString()}</h1> : <Lottie 
+	        options={defaultOptions}
+          height={400}
+          width={400}
+        />}
         <button onClick={()=>window.location.reload()}>Try more</button>
       </div>
     </div>
